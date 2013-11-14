@@ -19,11 +19,11 @@
 		221805B51833F75C00A43BB6 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2218059D1833F75C00A43BB6 /* UIKit.framework */; };
 		221805BD1833F75C00A43BB6 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 221805BB1833F75C00A43BB6 /* InfoPlist.strings */; };
 		221805BF1833F75C00A43BB6 /* WTAZoomNavigationControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 221805BE1833F75C00A43BB6 /* WTAZoomNavigationControllerTests.m */; };
-		221805CC1833F82E00A43BB6 /* WTAZoomNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 221805CB1833F82D00A43BB6 /* WTAZoomNavigationController.m */; };
 		221805D11834015A00A43BB6 /* WTAContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 221805CF1834015A00A43BB6 /* WTAContentViewController.m */; };
 		221805D21834015A00A43BB6 /* WTAContentViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 221805D01834015A00A43BB6 /* WTAContentViewController.xib */; };
 		221805D71834016B00A43BB6 /* WTALeftViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 221805D51834016B00A43BB6 /* WTALeftViewController.m */; };
 		221805D81834016B00A43BB6 /* WTALeftViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 221805D61834016B00A43BB6 /* WTALeftViewController.xib */; };
+		226EC72118355EB600A5C5A5 /* WTAZoomNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 226EC72018355EB600A5C5A5 /* WTAZoomNavigationController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,14 +53,14 @@
 		221805BA1833F75C00A43BB6 /* WTAZoomNavigationControllerTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "WTAZoomNavigationControllerTests-Info.plist"; sourceTree = "<group>"; };
 		221805BC1833F75C00A43BB6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		221805BE1833F75C00A43BB6 /* WTAZoomNavigationControllerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WTAZoomNavigationControllerTests.m; sourceTree = "<group>"; };
-		221805CA1833F82D00A43BB6 /* WTAZoomNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WTAZoomNavigationController.h; sourceTree = "<group>"; };
-		221805CB1833F82D00A43BB6 /* WTAZoomNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WTAZoomNavigationController.m; sourceTree = "<group>"; };
 		221805CE1834015A00A43BB6 /* WTAContentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WTAContentViewController.h; sourceTree = "<group>"; };
 		221805CF1834015A00A43BB6 /* WTAContentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WTAContentViewController.m; sourceTree = "<group>"; };
 		221805D01834015A00A43BB6 /* WTAContentViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WTAContentViewController.xib; sourceTree = "<group>"; };
 		221805D41834016B00A43BB6 /* WTALeftViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WTALeftViewController.h; sourceTree = "<group>"; };
 		221805D51834016B00A43BB6 /* WTALeftViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WTALeftViewController.m; sourceTree = "<group>"; };
 		221805D61834016B00A43BB6 /* WTALeftViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WTALeftViewController.xib; sourceTree = "<group>"; };
+		226EC71F18355EB600A5C5A5 /* WTAZoomNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WTAZoomNavigationController.h; sourceTree = "<group>"; };
+		226EC72018355EB600A5C5A5 /* WTAZoomNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WTAZoomNavigationController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -171,8 +171,8 @@
 		221805C91833F7CD00A43BB6 /* WTAZoomNavigationController */ = {
 			isa = PBXGroup;
 			children = (
-				221805CA1833F82D00A43BB6 /* WTAZoomNavigationController.h */,
-				221805CB1833F82D00A43BB6 /* WTAZoomNavigationController.m */,
+				226EC71F18355EB600A5C5A5 /* WTAZoomNavigationController.h */,
+				226EC72018355EB600A5C5A5 /* WTAZoomNavigationController.m */,
 			);
 			name = WTAZoomNavigationController;
 			sourceTree = "<group>";
@@ -295,8 +295,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				221805CC1833F82E00A43BB6 /* WTAZoomNavigationController.m in Sources */,
 				221805A61833F75C00A43BB6 /* main.m in Sources */,
+				226EC72118355EB600A5C5A5 /* WTAZoomNavigationController.m in Sources */,
 				221805AA1833F75C00A43BB6 /* WTAAppDelegate.m in Sources */,
 				221805D71834016B00A43BB6 /* WTALeftViewController.m in Sources */,
 				221805D11834015A00A43BB6 /* WTAContentViewController.m in Sources */,
@@ -500,6 +500,7 @@
 				221805C41833F75C00A43BB6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		221805C51833F75C00A43BB6 /* Build configuration list for PBXNativeTarget "WTAZoomNavigationControllerTests" */ = {
 			isa = XCConfigurationList;
@@ -508,6 +509,7 @@
 				221805C71833F75C00A43BB6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

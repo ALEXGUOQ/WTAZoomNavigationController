@@ -16,19 +16,19 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    self.window.backgroundColor = [UIColor purpleColor];
+    [self setWindow:[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]]];
+    [[self window] setTintColor:[UIColor purpleColor]];
     
     WTALeftViewController *leftViewController = [WTALeftViewController new];
-    WTAContentViewController *contentViewController = [WTAContentViewController new];
-    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:contentViewController];
+    UINavigationController *navigationController = [UINavigationController new];
     WTAZoomNavigationController *zoomNavigationController = [WTAZoomNavigationController new];
+    [zoomNavigationController setSpringAnimationOn:YES];
     [zoomNavigationController setContentViewController:navigationController];
     [zoomNavigationController setLeftViewController:leftViewController];
     
-    UIView *backgroundView = [UIView new];
-    [backgroundView setBackgroundColor:[UIColor blueColor]];
-    [zoomNavigationController setBackgroundView:backgroundView];
+    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"background"]];
+    [imageView setContentMode:UIViewContentModeCenter];
+    [zoomNavigationController setBackgroundView:imageView];
     
     [[self window] setRootViewController:zoomNavigationController];
     

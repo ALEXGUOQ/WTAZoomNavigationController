@@ -8,31 +8,42 @@
 
 #import "WTAContentViewController.h"
 
+#import "WTAZoomNavigationController.h"
+
 @interface WTAContentViewController ()
 
 @end
 
 @implementation WTAContentViewController
 
+#pragma mark - UIViewController Overrides
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
+    if (self)
+    {
+        [self setupNavigationItem];
     }
     return self;
 }
 
-- (void)viewDidLoad
+- (UIStatusBarStyle)preferredStatusBarStyle
 {
-    [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
+    return UIStatusBarStyleDefault;
 }
 
-- (void)didReceiveMemoryWarning
+#pragma mark - Instance Methods
+
+- (void)setupNavigationItem
 {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    UIBarButtonItem *menuBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Menu" style:UIBarButtonItemStyleBordered target:self action:@selector(menuBarButtonItemPressed:)];
+    [[self navigationItem] setLeftBarButtonItem:menuBarButtonItem];
+}
+
+- (void)menuBarButtonItemPressed:(id)sender
+{
+    [[self wta_zoomNavigationController] revealLeftViewController:YES];
 }
 
 @end
