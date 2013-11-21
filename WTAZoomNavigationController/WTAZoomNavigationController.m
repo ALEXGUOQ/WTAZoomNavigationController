@@ -151,9 +151,17 @@ static inline void wta_UIViewSetFrameOriginX(UIView *view, CGFloat originX) {
     }
     UIViewController *currentContentViewController = [self contentViewController];
     _contentViewController = contentViewController;
+    
+    UIView *contentContainerView = [[self zoomNavigationView] contentContainerView];
+    CGAffineTransform currentTransform = [contentContainerView transform];
+    [contentContainerView setTransform:CGAffineTransformIdentity];
+    
     [self replaceController:currentContentViewController
               newController:[self contentViewController]
                   container:[[self zoomNavigationView] contentContainerView]];
+    
+    [contentContainerView setTransform:currentTransform];
+    [[self zoomNavigationView] setNeedsLayout];
 }
 
 - (void)setLeftViewController:(UIViewController *)leftViewController

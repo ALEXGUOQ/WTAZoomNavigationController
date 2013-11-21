@@ -87,9 +87,8 @@ NSString * const WTATableCellIdentifier = @"WTATableCellIdentifier";
     
     WTAContentViewController *contentViewController = [WTAContentViewController new];
     [[contentViewController navigationItem] setTitle:[self datasource][[indexPath row]]];
-    UINavigationController *navigationController = (UINavigationController *)[[self wta_zoomNavigationController] contentViewController];
-    [navigationController setViewControllers:@[contentViewController]];
-    
+    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:contentViewController];
+    [[self wta_zoomNavigationController] setContentViewController:navigationController];
     [[self wta_zoomNavigationController] hideLeftViewController:YES];
 }
 
