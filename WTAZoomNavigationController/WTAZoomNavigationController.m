@@ -196,6 +196,9 @@ static inline void wta_UIViewSetFrameOriginX(UIView *view, CGFloat originX) {
         {
             [self transitionFromViewController:oldController toViewController:newController duration:0.0 options:0 animations:nil completion:^(BOOL finished) {
                 
+                [newController didMoveToParentViewController:self];
+                
+                [oldController willMoveToParentViewController:nil];
                 [oldController removeFromParentViewController];
                 [oldController setWta_zoomNavigationController:nil];
                 
@@ -204,11 +207,13 @@ static inline void wta_UIViewSetFrameOriginX(UIView *view, CGFloat originX) {
         else
         {
             [container addSubview:[newController view]];
+            [newController didMoveToParentViewController:self];
         }
     }
     else
     {
         [[oldController view] removeFromSuperview];
+        [oldController willMoveToParentViewController:nil];
         [oldController removeFromParentViewController];
         [oldController setWta_zoomNavigationController:nil];
     }

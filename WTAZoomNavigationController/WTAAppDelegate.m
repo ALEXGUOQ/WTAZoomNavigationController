@@ -20,10 +20,8 @@
     [[self window] setTintColor:[UIColor purpleColor]];
     
     WTALeftViewController *leftViewController = [WTALeftViewController new];
-    UINavigationController *navigationController = [UINavigationController new];
     WTAZoomNavigationController *zoomNavigationController = [WTAZoomNavigationController new];
     [zoomNavigationController setSpringAnimationOn:YES];
-    [zoomNavigationController setContentViewController:navigationController];
     [zoomNavigationController setLeftViewController:leftViewController];
     
     UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"background"]];
