@@ -27,6 +27,5 @@ artifacts/
 .bundle
 
 #private
-xcrake.config
 profiles/
 build/
