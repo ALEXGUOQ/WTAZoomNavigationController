@@ -51,6 +51,19 @@ NSString * const WTATableCellIdentifier = @"WTATableCellIdentifier";
     }
 }
 
+// For testing
+//- (void)willMoveToParentViewController:(UIViewController *)parent
+//{
+//    [super willMoveToParentViewController:parent];
+//    NSLog(@"%@ %@ %@", self, NSStringFromSelector(_cmd), parent);
+//}
+//
+//- (void)didMoveToParentViewController:(UIViewController *)parent
+//{
+//    [super didMoveToParentViewController:parent];
+//    NSLog(@"%@ %@ %@", self, NSStringFromSelector(_cmd), parent);
+//}
+
 - (UIStatusBarStyle)preferredStatusBarStyle
 {
     return UIStatusBarStyleLightContent;
