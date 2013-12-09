@@ -235,44 +235,50 @@ static inline void wta_UIViewSetFrameOriginX(UIView *view, CGFloat originX) {
 
 - (void)hideLeftViewController:(BOOL)animated
 {
-    if ([self isSpringAnimationOn])
-    {
-        [UIView animateWithDuration:0.5 delay:0.0 usingSpringWithDamping:0.7 initialSpringVelocity:20.0 options:UIViewAnimationOptionAllowAnimatedContent animations:^{
-            
-            [[self scrollView] setContentOffset:CGPointMake(WTAContentContainerViewOriginX, 0.0f) animated:NO];
-            
-        } completion:^(BOOL finished) {
-            
-            [[[self zoomNavigationView] contentContainerButton] setUserInteractionEnabled:NO];
-            
-        }];
-    }
-    else
-    {
-        [[self scrollView] setContentOffset:CGPointMake(WTAContentContainerViewOriginX, 0.0f) animated:YES];
-        [[[self zoomNavigationView] contentContainerButton] setUserInteractionEnabled:NO];
-    }
+    [self hideLeftViewController:animated completion:nil];
 }
 
 - (void)revealLeftViewController:(BOOL)animated
 {
-    if ([self isSpringAnimationOn])
-    {
-        [UIView animateWithDuration:0.5 delay:0.0 usingSpringWithDamping:0.7 initialSpringVelocity:20.0 options:UIViewAnimationOptionAllowAnimatedContent animations:^{
-            
-            [[self scrollView] setContentOffset:CGPointMake(0.0f, 0.0f) animated:NO];
-            
-        } completion:^(BOOL finished) {
-            
-            [[[self zoomNavigationView] contentContainerButton] setUserInteractionEnabled:YES];
-            
-        }];
-    }
-    else
-    {
-        [[self scrollView] setContentOffset:CGPointMake(0.0f, 0.0f) animated:YES];
+    [self revealLeftViewController:animated completion:nil];
+}
+
+- (void)hideLeftViewController:(BOOL)animated completion:(void (^)())completion
+{
+    CGFloat damping = [self isSpringAnimationOn] ? 0.7f : 1.0f;
+    
+    [UIView animateWithDuration:0.5 delay:0.0 usingSpringWithDamping:damping initialSpringVelocity:20.0 options:UIViewAnimationOptionAllowAnimatedContent animations:^{
+        
+        [[self scrollView] setContentOffset:CGPointMake(WTAContentContainerViewOriginX, 0.0f) animated:NO];
+        
+    } completion:^(BOOL finished) {
+        
+        [[[self zoomNavigationView] contentContainerButton] setUserInteractionEnabled:NO];
+        if (completion)
+        {
+            completion();
+        }
+        
+    }];
+}
+
+- (void)revealLeftViewController:(BOOL)animated completion:(void (^)())completion
+{
+    CGFloat damping = [self isSpringAnimationOn] ? 0.7f : 1.0f;
+    
+    [UIView animateWithDuration:0.5 delay:0.0 usingSpringWithDamping:damping initialSpringVelocity:20.0 options:UIViewAnimationOptionAllowAnimatedContent animations:^{
+        
+        [[self scrollView] setContentOffset:CGPointMake(0.0f, 0.0f) animated:NO];
+        
+    } completion:^(BOOL finished) {
+        
         [[[self zoomNavigationView] contentContainerButton] setUserInteractionEnabled:YES];
-    }
+        if (completion)
+        {
+            completion();
+        }
+        
+    }];
 }
 
 #pragma mark - UIScrollViewDelegate Methods
@@ -283,7 +289,12 @@ static inline void wta_UIViewSetFrameOriginX(UIView *view, CGFloat originX) {
     CGFloat contentOffsetX = contentOffset.x;
     static BOOL leftContentViewControllerVisible = NO;
     
-    CGFloat contentContainerScale = fminf(powf((contentOffsetX + WTAContentContainerViewOriginX) / (WTAContentContainerViewOriginX * 2.0f), .5f), 1.0f);
+    CGFloat contentContainerScale = powf((contentOffsetX + WTAContentContainerViewOriginX) / (WTAContentContainerViewOriginX * 2.0f), .5f);
+    if (isnan(contentContainerScale))
+    {
+        contentContainerScale = 0.0f;
+    }
+    
     CGAffineTransform contentContainerViewTransform = CGAffineTransformMakeScale(contentContainerScale, contentContainerScale);
     CGAffineTransform leftContainerViewTransform = CGAffineTransformMakeTranslation(contentOffsetX / 1.5f, 0.0f);
     

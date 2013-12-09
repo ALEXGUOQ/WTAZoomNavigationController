@@ -12,6 +12,8 @@
 
 - (void)hideLeftViewController:(BOOL)animated;
 - (void)revealLeftViewController:(BOOL)animated;
+- (void)hideLeftViewController:(BOOL)animated completion:(void (^)())completion;
+- (void)revealLeftViewController:(BOOL)animated completion:(void (^)())completion;
 
 @property (nonatomic, strong) UIViewController *contentViewController;
 @property (nonatomic, strong) UIViewController *leftViewController;
