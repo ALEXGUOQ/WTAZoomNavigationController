@@ -44,7 +44,7 @@ NSString * const WTATableCellIdentifier = @"WTATableCellIdentifier";
 
 - (void)viewWillAppear:(BOOL)animated
 {
-//    NSLog(@"Left Appearing");
+    //    NSLog(@"Left Appearing");
     if (![self didSelectInitialViewController])
     {
         [self setDidSelectInitialViewController:YES];
