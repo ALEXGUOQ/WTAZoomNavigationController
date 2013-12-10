@@ -307,18 +307,18 @@ static inline void wta_UIViewSetFrameOriginX(UIView *view, CGFloat originX) {
         [scrollView setContentOffset:CGPointMake(WTAContentContainerViewOriginX, 0.0f) animated:NO];
         if (leftContentViewControllerVisible)
         {
-            [[self leftViewController] viewWillDisappear:YES];
-            [[self leftViewController] viewDidDisappear:YES];
+            [[self leftViewController] beginAppearanceTransition:NO animated:YES];
             [scrollView setContentOffset:CGPointMake(WTAContentContainerViewOriginX, 0.0f) animated:NO];
+            [[self leftViewController] endAppearanceTransition];
             leftContentViewControllerVisible = NO;
             [self setNeedsStatusBarAppearanceUpdate];
         }
     }
     else if (contentOffsetX < WTAContentContainerViewOriginX && !leftContentViewControllerVisible)
     {
-        [[self leftViewController] viewWillAppear:YES];
-        [[self leftViewController] viewDidAppear:YES];
+        [[self leftViewController] beginAppearanceTransition:YES animated:YES];
         leftContentViewControllerVisible = YES;
+        [[self leftViewController] endAppearanceTransition];
         [self setNeedsStatusBarAppearanceUpdate];
     }
 }

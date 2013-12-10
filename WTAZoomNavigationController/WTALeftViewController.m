@@ -44,12 +44,28 @@ NSString * const WTATableCellIdentifier = @"WTATableCellIdentifier";
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    //    NSLog(@"Left Appearing");
     if (![self didSelectInitialViewController])
     {
         [self setDidSelectInitialViewController:YES];
         [self tableView:[self tableView] didSelectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
     }
 }
+
+//- (void)viewDidAppear:(BOOL)animated
+//{
+//    NSLog(@"Left Appeared");
+//}
+//
+//- (void)viewWillDisappear:(BOOL)animated
+//{
+//    NSLog(@"Left will disappear");
+//}
+//
+//- (void)viewDidDisappear:(BOOL)animated
+//{
+//    NSLog(@"Left did disappear");
+//}
 
 // For testing
 //- (void)willMoveToParentViewController:(UIViewController *)parent
