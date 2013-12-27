@@ -10,6 +10,9 @@
 
 @interface WTAZoomNavigationController : UIViewController
 
+// Default is 150.0f. Higher == more zooming away, lower == less zooming away
+- (instancetype)initWithZoomFactor:(CGFloat)zoomFactor;
+
 - (void)hideLeftViewController:(BOOL)animated;
 - (void)revealLeftViewController:(BOOL)animated;
 - (void)hideLeftViewController:(BOOL)animated completion:(void (^)())completion;
