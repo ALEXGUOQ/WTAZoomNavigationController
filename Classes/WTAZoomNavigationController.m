@@ -11,7 +11,6 @@
 #import <objc/runtime.h>
 
 const char *WTAZoomNavigationControllerKey = "WTAZoomNavigationControllerKey";
-static const CGFloat WTAContentContainerViewOriginX = 150.0f;
 
 static inline void wta_UIViewSetFrameOriginX(UIView *view, CGFloat originX) {
     [view setFrame:CGRectMake(originX, CGRectGetMinY([view frame]), CGRectGetWidth([view frame]), CGRectGetHeight([view frame]))];
@@ -51,7 +50,7 @@ static inline void wta_UIViewSetFrameOriginX(UIView *view, CGFloat originX) {
 
 #pragma mark - UIView Overrides
 
-- (id)initWithFrame:(CGRect)frame
+- (id)initWithFrame:(CGRect)frame zoomFactor:(CGFloat)zoomFactor
 {
     self = [super initWithFrame:frame];
     if (self)
@@ -61,13 +60,13 @@ static inline void wta_UIViewSetFrameOriginX(UIView *view, CGFloat originX) {
         [[self scrollView] setShowsHorizontalScrollIndicator:NO];
         [[self scrollView] setShowsVerticalScrollIndicator:NO];
         [[self scrollView] setBackgroundColor:[UIColor clearColor]];
-        [[self scrollView] setContentSize:CGSizeMake(CGRectGetWidth(frame) + WTAContentContainerViewOriginX, CGRectGetHeight(frame))];
+        [[self scrollView] setContentSize:CGSizeMake(CGRectGetWidth(frame) + zoomFactor, CGRectGetHeight(frame))];
         
         [self setLeftContainerView:[[UIView alloc] initWithFrame:[self bounds]]];
         [[self scrollView] addSubview:[self leftContainerView]];
         
         [self setContentContainerView:[[UIView alloc] initWithFrame:[self bounds]]];
-        wta_UIViewSetFrameOriginX([self contentContainerView], WTAContentContainerViewOriginX);
+        wta_UIViewSetFrameOriginX([self contentContainerView], zoomFactor);
         [[self contentContainerView] setBackgroundColor:[UIColor clearColor]];
         [[self scrollView] addSubview:[self contentContainerView]];
         
@@ -75,7 +74,7 @@ static inline void wta_UIViewSetFrameOriginX(UIView *view, CGFloat originX) {
         [[self contentContainerButton] setFrame:[[self contentContainerView] bounds]];
         [[self contentContainerView] addSubview:[self contentContainerButton]];
         
-        [[self scrollView] setContentOffset:CGPointMake(WTAContentContainerViewOriginX, 0.0f) animated:NO];
+        [[self scrollView] setContentOffset:CGPointMake(zoomFactor, 0.0f) animated:NO];
         
         [self addSubview:[self scrollView]];
     }
@@ -104,16 +103,47 @@ static inline void wta_UIViewSetFrameOriginX(UIView *view, CGFloat originX) {
 @interface WTAZoomNavigationController () <UIScrollViewDelegate>
 
 @property (nonatomic, strong) WTAZoomNavigationView *zoomNavigationView;
+@property (nonatomic, assign) CGFloat zoomFactor;
 
 @end
 
 @implementation WTAZoomNavigationController
 
+- (id)initWithZoomFactor:(CGFloat)zoomFactor
+{
+    self = [super init];
+    if (self)
+    {
+        [self setZoomFactor:zoomFactor];
+    }
+    return self;
+}
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self)
+    {
+        [self setZoomFactor:150.0f];
+    }
+    return self;
+}
+
+- (id)init
+{
+    self = [super init];
+    if (self)
+    {
+        [self setZoomFactor:150.0f];
+    }
+    return self;
+}
+
 #pragma mark - UIViewController Overrides
 
 - (void)loadView
 {
-    WTAZoomNavigationView *view = [[WTAZoomNavigationView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    WTAZoomNavigationView *view = [[WTAZoomNavigationView alloc] initWithFrame:[[UIScreen mainScreen] bounds] zoomFactor:[self zoomFactor]];
     [view setAutoresizingMask:UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth];
     [self setZoomNavigationView:view];
     [self setView:[self zoomNavigationView]];
@@ -223,7 +253,7 @@ static inline void wta_UIViewSetFrameOriginX(UIView *view, CGFloat originX) {
 {
     CGPoint contentOffset = [[[self zoomNavigationView] scrollView] contentOffset];
     CGFloat contentOffsetX = contentOffset.x;
-    if (contentOffsetX < WTAContentContainerViewOriginX)
+    if (contentOffsetX < [self zoomFactor])
     {
         [[[self zoomNavigationView] contentContainerButton] setUserInteractionEnabled:YES];
     }
@@ -249,7 +279,7 @@ static inline void wta_UIViewSetFrameOriginX(UIView *view, CGFloat originX) {
     
     [UIView animateWithDuration:0.5 delay:0.0 usingSpringWithDamping:damping initialSpringVelocity:20.0 options:UIViewAnimationOptionAllowAnimatedContent animations:^{
         
-        [[self scrollView] setContentOffset:CGPointMake(WTAContentContainerViewOriginX, 0.0f) animated:NO];
+        [[self scrollView] setContentOffset:CGPointMake([self zoomFactor], 0.0f) animated:NO];
         
     } completion:^(BOOL finished) {
         
@@ -289,7 +319,7 @@ static inline void wta_UIViewSetFrameOriginX(UIView *view, CGFloat originX) {
     CGFloat contentOffsetX = contentOffset.x;
     static BOOL leftContentViewControllerVisible = NO;
     
-    CGFloat contentContainerScale = powf((contentOffsetX + WTAContentContainerViewOriginX) / (WTAContentContainerViewOriginX * 2.0f), .5f);
+    CGFloat contentContainerScale = powf((contentOffsetX + [self zoomFactor]) / ([self zoomFactor] * 2.0f), .5f);
     if (isnan(contentContainerScale))
     {
         contentContainerScale = 0.0f;
@@ -300,21 +330,21 @@ static inline void wta_UIViewSetFrameOriginX(UIView *view, CGFloat originX) {
     
     [[[self zoomNavigationView] contentContainerView] setTransform:contentContainerViewTransform];
     [[[self zoomNavigationView] leftContainerView] setTransform:leftContainerViewTransform];
-    [[[self zoomNavigationView] leftContainerView] setAlpha:1 - contentOffsetX / WTAContentContainerViewOriginX];
+    [[[self zoomNavigationView] leftContainerView] setAlpha:1 - contentOffsetX / [self zoomFactor]];
     
-    if (contentOffsetX >= WTAContentContainerViewOriginX)
+    if (contentOffsetX >= [self zoomFactor])
     {
-        [scrollView setContentOffset:CGPointMake(WTAContentContainerViewOriginX, 0.0f) animated:NO];
+        [scrollView setContentOffset:CGPointMake([self zoomFactor], 0.0f) animated:NO];
         if (leftContentViewControllerVisible)
         {
             [[self leftViewController] beginAppearanceTransition:NO animated:YES];
-            [scrollView setContentOffset:CGPointMake(WTAContentContainerViewOriginX, 0.0f) animated:NO];
+            [scrollView setContentOffset:CGPointMake([self zoomFactor], 0.0f) animated:NO];
             [[self leftViewController] endAppearanceTransition];
             leftContentViewControllerVisible = NO;
             [self setNeedsStatusBarAppearanceUpdate];
         }
     }
-    else if (contentOffsetX < WTAContentContainerViewOriginX && !leftContentViewControllerVisible)
+    else if (contentOffsetX < [self zoomFactor] && !leftContentViewControllerVisible)
     {
         [[self leftViewController] beginAppearanceTransition:YES animated:YES];
         leftContentViewControllerVisible = YES;
@@ -340,20 +370,20 @@ static inline void wta_UIViewSetFrameOriginX(UIView *view, CGFloat originX) {
 {
     CGSize contentSize = [scrollView contentSize];
     CGFloat targetContentOffsetX = targetContentOffset->x;
-    if (targetContentOffsetX <= (contentSize.width / 2.0f) - WTAContentContainerViewOriginX)
+    if (targetContentOffsetX <= (contentSize.width / 2.0f) - [self zoomFactor])
     {
         targetContentOffset->x = 0.0f;
     }
     else
     {
-        targetContentOffset->x = WTAContentContainerViewOriginX;
+        targetContentOffset->x = [self zoomFactor];
     }
 }
 
 - (UIViewController *)childViewControllerForStatusBarStyle
 {
     UIViewController *viewController;
-    if ([[self scrollView] contentOffset].x < WTAContentContainerViewOriginX)
+    if ([[self scrollView] contentOffset].x < [self zoomFactor])
     {
         viewController = [self leftViewController];
     }
@@ -367,7 +397,7 @@ static inline void wta_UIViewSetFrameOriginX(UIView *view, CGFloat originX) {
 - (UIViewController *)childViewControllerForStatusBarHidden
 {
     UIViewController *viewController;
-    if ([[self scrollView] contentOffset].x < WTAContentContainerViewOriginX)
+    if ([[self scrollView] contentOffset].x < [self zoomFactor])
     {
         viewController = [self leftViewController];
     }

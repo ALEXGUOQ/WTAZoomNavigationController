@@ -20,7 +20,7 @@
     [[self window] setTintColor:[UIColor purpleColor]];
     
     WTALeftViewController *leftViewController = [WTALeftViewController new];
-    WTAZoomNavigationController *zoomNavigationController = [WTAZoomNavigationController new];
+    WTAZoomNavigationController *zoomNavigationController = [[WTAZoomNavigationController alloc] initWithZoomFactor:200.0f];
     [zoomNavigationController setSpringAnimationOn:YES];
     [zoomNavigationController setLeftViewController:leftViewController];
     
