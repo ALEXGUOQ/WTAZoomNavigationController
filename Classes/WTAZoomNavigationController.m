@@ -325,11 +325,11 @@ static inline void wta_UIViewSetFrameOriginX(UIView *view, CGFloat originX) {
         contentContainerScale = 0.0f;
     }
     
-    CGAffineTransform contentContainerViewTransform = CGAffineTransformMakeScale(contentContainerScale, contentContainerScale);
-    CGAffineTransform leftContainerViewTransform = CGAffineTransformMakeTranslation(contentOffsetX / 1.5f, 0.0f);
+    CATransform3D contentContainerViewTransform3D = CATransform3DMakeScale(contentContainerScale, contentContainerScale, 1.0f);
+    CATransform3D leftContainerViewTransform3D = CATransform3DMakeTranslation(contentOffsetX / 1.5f, 0.0f, 0.0f);
     
-    [[[self zoomNavigationView] contentContainerView] setTransform:contentContainerViewTransform];
-    [[[self zoomNavigationView] leftContainerView] setTransform:leftContainerViewTransform];
+    [[[[self zoomNavigationView] contentContainerView] layer] setTransform:contentContainerViewTransform3D];
+    [[[[self zoomNavigationView] leftContainerView] layer] setTransform:leftContainerViewTransform3D];
     [[[self zoomNavigationView] leftContainerView] setAlpha:1 - contentOffsetX / [self zoomFactor]];
     
     if (contentOffsetX >= [self zoomFactor])
