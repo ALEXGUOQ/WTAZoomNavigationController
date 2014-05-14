@@ -152,6 +152,7 @@ static inline void wta_UIViewSetFrameOriginX(UIView *view, CGFloat originX) {
 - (void)viewDidLoad
 {
     [[[self zoomNavigationView] scrollView] setDelegate:self];
+    [[[self zoomNavigationView] scrollView] setDelaysContentTouches:NO];
     [[[self zoomNavigationView] contentContainerButton] setUserInteractionEnabled:NO];
     [[[self zoomNavigationView] contentContainerButton] addTarget:self action:@selector(contentContainerButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
 }
@@ -284,6 +285,7 @@ static inline void wta_UIViewSetFrameOriginX(UIView *view, CGFloat originX) {
     } completion:^(BOOL finished) {
         
         [[[self zoomNavigationView] contentContainerButton] setUserInteractionEnabled:NO];
+        [[[self zoomNavigationView] scrollView] setDelaysContentTouches:NO];
         if (completion)
         {
             completion();
@@ -303,6 +305,7 @@ static inline void wta_UIViewSetFrameOriginX(UIView *view, CGFloat originX) {
     } completion:^(BOOL finished) {
         
         [[[self zoomNavigationView] contentContainerButton] setUserInteractionEnabled:YES];
+        [[[self zoomNavigationView] scrollView] setDelaysContentTouches:YES];
         if (completion)
         {
             completion();
